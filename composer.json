@@ -1,13 +1,13 @@
 {
-    "name": "moonshine/day-spring",
+    "name": "moonshine/spring",
     "description": "Description",
     "keywords": ["keyword"],
     "type": "library",
     "homepage": "https://moonshine.cutcode.dev",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/moonshine/day-spring/issues",
-        "source": "https://github.com/moonshine/day-spring"
+        "issues": "https://github.com/moonshine/spring/issues",
+        "source": "https://github.com/moonshine/spring"
     },
     "authors": [
         {
@@ -27,13 +27,13 @@
     },
     "autoload": {
         "psr-4": {
-            "MoonShine\\DaySpring\\": "src/"
+            "MoonShine\\Spring\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MoonShine\\DaySpring\\Tests\\": "tests/",
-            "MoonShine\\DaySpring\\Database\\Factories\\": "database/factories/"
+            "MoonShine\\Spring\\Tests\\": "tests/",
+            "MoonShine\\Spring\\Database\\Factories\\": "database/factories/"
         }
     },
     "conflict": {
@@ -46,7 +46,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "DaySpringServiceProvider"
+                "SpringServiceProvider"
             ]
         }
     }
