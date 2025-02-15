@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "moonshine/moonshine": "3.0^"
+        "moonshine/moonshine": "^3.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
@@ -46,7 +46,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "SpringServiceProvider"
+                "MoonShine\\Spring\\Providers\\SpringServiceProvider"
             ]
         }
     }

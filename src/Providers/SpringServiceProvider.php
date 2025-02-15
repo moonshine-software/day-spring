@@ -18,7 +18,7 @@ final class SpringServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'spring');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'spring');
-        $this->loadRoutesFrom(__DIR__ . '/../../routes');
+        //$this->loadRoutesFrom(__DIR__ . '/../../routes');
 
         $this->publishes([
             __DIR__ . '/../../config/spring.php' => config_path('spring.php'),
