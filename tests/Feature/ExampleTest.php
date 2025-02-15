@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace MoonShine\DaySpring\Tests\Feature;
 
-use PHPUnit\Framework\Attributes\Test;
 use MoonShine\DaySpring\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ExampleTest extends TestCase
 {

@@ -29,13 +29,13 @@ final class DaySpringServiceProvider extends ServiceProvider
             'day-spring'
         );
 
-//        $this->publishes([
-//            __DIR__ . '/../../public' => public_path('vendor/day-spring'),
-//        ], ['day-spring-assets', 'laravel-assets']);
-//
-//        $this->publishes([
-//            __DIR__ . '/../../lang' => $this->app->langPath('vendor/day-spring'),
-//        ]);
+        //        $this->publishes([
+        //            __DIR__ . '/../../public' => public_path('vendor/day-spring'),
+        //        ], ['day-spring-assets', 'laravel-assets']);
+        //
+        //        $this->publishes([
+        //            __DIR__ . '/../../lang' => $this->app->langPath('vendor/day-spring'),
+        //        ]);
 
         $this->commands([]);
     }
