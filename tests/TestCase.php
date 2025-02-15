@@ -3,10 +3,10 @@
 namespace MoonShine\Spring\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use MoonShine\Spring\Providers\SpringServiceProvider;
 use MoonShine\Laravel\Models\MoonshineUser;
 use MoonShine\Laravel\Models\MoonshineUserRole;
 use MoonShine\Laravel\Providers\MoonShineServiceProvider;
+use MoonShine\Spring\Providers\SpringServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
