@@ -12,16 +12,16 @@ class SpringInstallCommand extends Command
     public function handle(Filesystem $filesystem): void
     {
         $filesystem->ensureDirectoryExists(app_path('Http/Controllers'));
-        $filesystem->copyDirectory(__DIR__.'/../../stubs/app/Http/Controllers', app_path('Http/Controllers'));
+        $filesystem->copyDirectory(__DIR__ . '/../../stubs/app/Http/Controllers', app_path('Http/Controllers'));
 
         $filesystem->ensureDirectoryExists(app_path('Http/Requests'));
-        $filesystem->copyDirectory(__DIR__.'/../../stubs/app/Http/Requests', app_path('Http/Requests'));
+        $filesystem->copyDirectory(__DIR__ . '/../../stubs/app/Http/Requests', app_path('Http/Requests'));
 
         $filesystem->ensureDirectoryExists(app_path('View'));
-        $filesystem->copyDirectory(__DIR__.'/../../stubs/app/View', app_path('View'));
+        $filesystem->copyDirectory(__DIR__ . '/../../stubs/app/View', app_path('View'));
 
-        copy(__DIR__.'/../../stubs/routes/web.php', base_path('routes/web.php'));
-        copy(__DIR__.'/../../stubs/routes/auth.php', base_path('routes/auth.php'));
+        copy(__DIR__ . '/../../stubs/routes/web.php', base_path('routes/web.php'));
+        copy(__DIR__ . '/../../stubs/routes/auth.php', base_path('routes/auth.php'));
 
         $this->components->info('MoonShine Spring installed successfully!');
     }
