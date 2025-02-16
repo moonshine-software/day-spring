@@ -1,0 +1,25 @@
+<?php
+
+use App\Http\Controllers\Auth\AuthenticateController;
+use App\Http\Controllers\Auth\ForgotController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\View\Pages\ResetPasswordPage;
+use Illuminate\Support\Facades\Route;
+
+Route::controller(AuthenticateController::class)->group(function () {
+    Route::get('/login', 'form')->middleware('guest')->name('login');
+    Route::post('/login', 'authenticate')->middleware('guest')->name('authenticate');
+    Route::delete('/logout', 'logout')->middleware('auth')->name('logout');
+});
+
+Route::controller(ForgotController::class)->middleware('guest')->group(function () {
+    Route::get('/forgot', 'form')->name('forgot');
+    Route::post('/forgot', 'reset');
+    Route::get('/reset-password/{token}', static fn (ResetPasswordPage $page) => $page)->name('password.reset');
+    Route::post('/reset-password', 'updatePassword')->name('password.update');
+});
+
+Route::controller(RegisterController::class)->middleware('guest')->group(function () {
+    Route::get('/register', 'form')->name('register');
+    Route::post('/register', 'store')->name('register.store');
+});

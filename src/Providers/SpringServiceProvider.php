@@ -5,9 +5,17 @@ declare(strict_types=1);
 namespace MoonShine\Spring\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use MoonShine\Spring\Commands\SpringInstallCommand;
 
 final class SpringServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array<int, string>
+     */
+    protected array $commands = [
+        SpringInstallCommand::class,
+    ];
+
     public function register(): void
     {
         //
@@ -15,6 +23,10 @@ final class SpringServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands($this->commands);
+        }
+
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'spring');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'spring');
