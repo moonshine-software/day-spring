@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Http\Requests\ProfileFormRequest;
 use App\Models\User;
 use App\View\Pages\ProfilePage;
@@ -22,8 +23,7 @@ class ProfileController extends Controller
     public function update(
         ProfileFormRequest $request,
         #[CurrentUser] User $user
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $data = $request->only(['email', 'name']);
 
         if($request->filled('password')) {
@@ -35,6 +35,19 @@ class ProfileController extends Controller
         /** @var array<string, mixed> $updateData */
         $updateData = $data;
         $user->update($updateData);
+
+        return to_route('profile');
+    }
+
+    public function updatePassword(
+        UpdatePasswordRequest $request,
+        #[CurrentUser] User $user
+    ): RedirectResponse {
+        $data = $request->validated();
+
+        $user->update([
+            'password' => Hash::make((string) $data['password']),
+        ]);
 
         return to_route('profile');
     }

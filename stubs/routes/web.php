@@ -10,6 +10,7 @@ Route::get('/', function () {
 Route::controller(ProfileController::class)->middleware('auth')->prefix('profile')->group(function () {
     Route::get('/', 'index')->name('profile');
     Route::post('/', 'update')->name('profile.update');
+    Route::post('/update-password', 'updatePassword')->name('profile.password.update');
 });
 
 require __DIR__.'/auth.php';
