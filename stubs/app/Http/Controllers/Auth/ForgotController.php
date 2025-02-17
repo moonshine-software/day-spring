@@ -38,6 +38,7 @@ class ForgotController extends Controller
 
     public function updatePassword(ResetPasswordFormRequest $request): RedirectResponse
     {
+        /** @var string $status */
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             static function (User $user, string $password) {

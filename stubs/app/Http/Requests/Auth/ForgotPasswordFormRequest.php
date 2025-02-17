@@ -11,6 +11,9 @@ class ForgotPasswordFormRequest extends FormRequest
         return auth()->guest();
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function rules(): array
     {
         return [

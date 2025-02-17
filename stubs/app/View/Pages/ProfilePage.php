@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\View\Pages;
 
 use App\View\Layouts\ProfileLayout;
+use Illuminate\Session\SessionManager;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Laravel\Pages\Page;
 use MoonShine\UI\Components\FormBuilder;
@@ -16,6 +17,9 @@ use MoonShine\UI\Fields\Password;
 use MoonShine\UI\Fields\PasswordRepeat;
 use MoonShine\UI\Fields\Text;
 
+/**
+ * @template-extends Page<null>
+ */
 class ProfilePage extends Page
 {
     protected ?string $layout = ProfileLayout::class;
@@ -40,6 +44,8 @@ class ProfilePage extends Page
      */
     protected function components(): iterable
     {
+        $errors = session('errors');
+
         return [
             Box::make([
                 FormBuilder::make()
@@ -61,7 +67,7 @@ class ProfilePage extends Page
                                 Password::make(__('Password'), 'password'),
                                 PasswordRepeat::make(__('Repeat password'), 'password_confirmation'),
                             ])->active(
-                                session('errors')?->has('password') ?? false
+                                $errors instanceof SessionManager && $errors->has('password')
                             )
                         ])
                     ])->submit(__('Update profile'), [

@@ -12,6 +12,9 @@ use MoonShine\UI\Fields\Password;
 use MoonShine\UI\Fields\PasswordRepeat;
 use MoonShine\UI\Fields\Text;
 
+/**
+ * @template-extends Page<null>
+ */
 class RegisterPage extends Page
 {
     protected ?string $layout = FormLayout::class;

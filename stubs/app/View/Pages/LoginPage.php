@@ -16,6 +16,9 @@ use MoonShine\UI\Fields\Password;
 use MoonShine\UI\Fields\Switcher;
 use MoonShine\UI\Fields\Text;
 
+/**
+ * @template-extends Page<null>
+ */
 class LoginPage extends Page
 {
     protected ?string $layout = FormLayout::class;

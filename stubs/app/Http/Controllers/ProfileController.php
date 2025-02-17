@@ -27,10 +27,14 @@ class ProfileController extends Controller
         $data = $request->only(['email', 'name']);
 
         if($request->filled('password')) {
-            $data['password'] = Hash::make($request->input('password'));
+            /** @var string $password */
+            $password = $request->input('password');
+            $data['password'] = Hash::make($password);
         }
 
-        $user->update($data);
+        /** @var array<string, mixed> $updateData */
+        $updateData = $data;
+        $user->update($updateData);
 
         return to_route('profile');
     }

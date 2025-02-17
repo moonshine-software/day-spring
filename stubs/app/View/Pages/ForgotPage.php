@@ -13,6 +13,9 @@ use MoonShine\UI\Components\Layout\Divider;
 use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\UI\Fields\Text;
 
+/**
+ * @template-extends Page<null>
+ */
 class ForgotPage extends Page
 {
     protected ?string $layout = FormLayout::class;

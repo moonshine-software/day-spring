@@ -15,7 +15,9 @@ class ProfileFormRequest extends FormRequest
         return auth()->check();
     }
 
-
+    /**
+     * @return array<array-key, mixed>
+     */
     public function rules(): array
     {
         return [
