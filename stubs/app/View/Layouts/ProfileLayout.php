@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\View\Layouts;
 
+use MoonShine\Contracts\MenuManager\MenuElementContract;
 use MoonShine\Laravel\Components\Layout\Profile;
 use MoonShine\Laravel\Layouts\AppLayout;
 use MoonShine\UI\Components\{Components,
@@ -29,6 +30,9 @@ final class ProfileLayout extends AppLayout
         return route('home');
     }
 
+    /**
+     * @return list<MenuElementContract>
+     */
     protected function menu(): array
     {
         return [
@@ -36,6 +40,9 @@ final class ProfileLayout extends AppLayout
         ];
     }
 
+    /**
+     * @return list<MenuElementContract>
+     */
     protected function topMenu(): array
     {
         return [
