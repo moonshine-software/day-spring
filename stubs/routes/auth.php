@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Auth\ForgotController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -14,7 +16,7 @@ Route::controller(AuthenticateController::class)->group(function () {
 
 Route::controller(ForgotController::class)->middleware('guest')->group(function () {
     Route::get('/forgot', 'form')->name('forgot');
-    Route::post('/forgot', 'reset');
+    Route::post('/forgot', 'reset')->name('forgot.reset');
     Route::get('/reset-password/{token}', static fn (ResetPasswordPage $page) => $page)->name('password.reset');
     Route::post('/reset-password', 'updatePassword')->name('password.update');
 });
