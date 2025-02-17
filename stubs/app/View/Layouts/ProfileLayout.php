@@ -4,15 +4,23 @@ declare(strict_types=1);
 
 namespace App\View\Layouts;
 
+use MoonShine\Laravel\Components\Layout\Profile;
 use MoonShine\Laravel\Layouts\AppLayout;
 use MoonShine\UI\Components\{Components,
     Layout\Body,
+    Layout\Burger,
     Layout\Content,
     Layout\Div,
     Layout\Flash,
     Layout\Html,
     Layout\Layout,
+    Layout\Menu,
+    Layout\MobileBar,
+    Layout\Sidebar,
+    Layout\ThemeSwitcher,
+    Layout\TopBar,
     Layout\Wrapper};
+use MoonShine\MenuManager\MenuItem;
 
 final class ProfileLayout extends AppLayout
 {
@@ -21,14 +29,101 @@ final class ProfileLayout extends AppLayout
         return route('home');
     }
 
+    protected function menu(): array
+    {
+        return [
+            MenuItem::make(__('Profile'), route('profile'))->icon('user')
+        ];
+    }
+
+    protected function topMenu(): array
+    {
+        return [
+            MenuItem::make('Welcome', route('home'))
+        ];
+    }
+
+    protected function getSidebarComponent(): Sidebar
+    {
+        return Sidebar::make([
+            Div::make([
+                Div::make([
+                    $this->getLogoComponent()->minimized(),
+                ])->class('menu-heading-logo'),
+
+                Div::make([
+                    ThemeSwitcher::make(),
+
+                    Div::make([
+                        Burger::make(),
+                    ])->class('menu-heading-burger'),
+                ])->class('menu-heading-actions'),
+            ])->class('menu-heading'),
+
+            Div::make([
+                Menu::make(),
+                Profile::make(route: route('profile'), logOutRoute: route('logout'), withBorder: true),
+            ])->customAttributes([
+                'class' => 'menu',
+                ':class' => "asideMenuOpen && '_is-opened'",
+            ]),
+        ])->collapsed();
+    }
+
+    protected function getTopBarComponent(): Topbar
+    {
+        return TopBar::make([
+            Div::make([
+                Menu::make($this->topMenu())->top(),
+            ])->class('menu-navigation'),
+
+            Div::make([
+                Div::make([
+                    Burger::make(),
+                ])->class('menu-burger'),
+            ])->class('menu-actions'),
+        ])->customAttributes([
+            ':class' => "asideMenuOpen && '_is-opened'",
+        ]);
+    }
+
     public function build(): Layout
     {
         return Layout::make([
             Html::make([
                 $this->getHeadComponent(),
-
                 Body::make([
                     Wrapper::make([
+                        MobileBar::make([
+                            Div::make([
+                                Div::make([
+                                    $this->getLogoComponent()->minimized(),
+                                ])->class('menu-heading-logo'),
+
+                                Div::make([
+                                    ThemeSwitcher::make(),
+
+                                    Div::make([
+                                        Burger::make(),
+                                    ])->class('menu-heading-burger'),
+                                ])->class('menu-heading-actions'),
+                            ])->class('menu-heading'),
+
+                            Div::make([
+                                Menu::make([
+                                    ...$this->menu(),
+                                    ...$this->topMenu(),
+                                ]),
+                                Profile::make(route: route('profile'), logOutRoute: route('logout')),
+                            ])->customAttributes([
+                                'class' => 'menu',
+                                ':class' => "asideMenuOpen && '_is-opened'",
+                            ]),
+                        ]),
+
+                        $this->getTopBarComponent(),
+                        $this->getSidebarComponent(),
+
                         Div::make([
                             Flash::make(),
 
@@ -39,7 +134,7 @@ final class ProfileLayout extends AppLayout
                             ]),
                         ])->class('layout-page'),
                     ]),
-                ])->class('theme-minimalistic'),
+                ]),
             ])
                 ->customAttributes([
                     'lang' => $this->getHeadLang(),

@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "moonshine/moonshine": "^3.5"
+        "moonshine/moonshine": "^3"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
