@@ -4,7 +4,6 @@ namespace MoonShine\Spring\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use MoonShine\Laravel\MoonShineAuth;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileMiddleware
