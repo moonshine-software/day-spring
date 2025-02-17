@@ -23,7 +23,7 @@ class SpringInstallCommand extends Command
         copy(__DIR__ . '/../../stubs/routes/web.php', base_path('routes/web.php'));
         copy(__DIR__ . '/../../stubs/routes/auth.php', base_path('routes/auth.php'));
 
-        $filesystem->copyDirectory(__DIR__.'/../../stubs/tests/Feature', base_path('tests/Feature'));
+        $filesystem->copyDirectory(__DIR__ . '/../../stubs/tests/Feature', base_path('tests/Feature'));
 
         $this->components->info('MoonShine Spring installed successfully!');
     }
