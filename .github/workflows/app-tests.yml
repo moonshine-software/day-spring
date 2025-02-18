@@ -47,7 +47,7 @@ jobs:
       - name: Install Spring
         run: |
           composer update "moonshine/spring" --prefer-dist --no-interaction --no-progress -W
-          php artisan spring:install
+          php artisan moonshine-spring:install
 
       - name: Execute tests
         run: vendor/bin/phpunit
