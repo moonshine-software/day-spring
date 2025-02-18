@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Spring\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use MoonShine\Spring\Commands\SpringDevCommand;
 use MoonShine\Spring\Commands\SpringInstallCommand;
 
 final class SpringServiceProvider extends ServiceProvider
@@ -14,6 +15,7 @@ final class SpringServiceProvider extends ServiceProvider
      */
     protected array $commands = [
         SpringInstallCommand::class,
+        SpringDevCommand::class,
     ];
 
     public function register(): void
