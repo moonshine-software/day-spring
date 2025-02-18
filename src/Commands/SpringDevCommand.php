@@ -15,7 +15,7 @@ class SpringDevCommand extends Command
     {
         $packageStubs = base_path() . '/packages/moonshine/spring/stubs';
 
-        if(! $this->runAnalyse()) {
+        if (! $this->runAnalyse()) {
             return self::FAILURE;
         }
 
@@ -44,12 +44,15 @@ class SpringDevCommand extends Command
     {
         $process = (new Process(['composer', 'analyse']))
             ->setWorkingDirectory(base_path());
+
         try {
             $output = $process->mustRun()->getOutput();
             $this->line($output);
+
             return true;
         } catch (ProcessFailedException $exception) {
             $this->warn($exception->getMessage());
+
             return false;
         }
     }
