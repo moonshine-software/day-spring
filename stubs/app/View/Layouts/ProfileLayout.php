@@ -25,6 +25,13 @@ use MoonShine\MenuManager\MenuItem;
 
 final class ProfileLayout extends AppLayout
 {
+    protected function onBoot(): void
+    {
+        parent::onBoot();
+
+        $this->getCore()->getConfig()->homeRoute('home');
+    }
+
     protected function getHomeUrl(): string
     {
         return route('home');
@@ -69,7 +76,7 @@ final class ProfileLayout extends AppLayout
 
             Div::make([
                 Menu::make(),
-                Profile::make(route: route('profile'), logOutRoute: route('logout'), withBorder: true),
+                $this->getProfileComponent(sidebar: true),
             ])->customAttributes([
                 'class' => 'menu',
                 ':class' => "asideMenuOpen && '_is-opened'",
@@ -92,6 +99,16 @@ final class ProfileLayout extends AppLayout
         ])->customAttributes([
             ':class' => "asideMenuOpen && '_is-opened'",
         ]);
+    }
+
+    protected function getProfileComponent(bool $sidebar = false): Profile
+    {
+        return Profile::make(
+            route: route('profile'),
+            logOutRoute: route('logout'),
+            withBorder: $sidebar,
+            guard: 'web'
+        );
     }
 
     public function build(): Layout
@@ -121,7 +138,7 @@ final class ProfileLayout extends AppLayout
                                     ...$this->menu(),
                                     ...$this->topMenu(),
                                 ]),
-                                Profile::make(route: route('profile'), logOutRoute: route('logout')),
+                                $this->getProfileComponent(),
                             ])->customAttributes([
                                 'class' => 'menu',
                                 ':class' => "asideMenuOpen && '_is-opened'",
