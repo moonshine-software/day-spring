@@ -2,7 +2,6 @@
 
 namespace MoonShine\Spring\Tests\Feature;
 
-
 use MoonShine\Spring\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
