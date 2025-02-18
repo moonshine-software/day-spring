@@ -106,6 +106,7 @@ final class ProfileLayout extends AppLayout
         return Profile::make(
             route: route('profile'),
             logOutRoute: route('logout'),
+            avatar: static fn() => false,
             withBorder: $sidebar,
             guard: 'web'
         );

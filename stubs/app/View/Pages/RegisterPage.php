@@ -29,7 +29,7 @@ class RegisterPage extends Page
 
     public function getTitle(): string
     {
-        return $this->title ?: 'RegisterPage';
+        return $this->title ?: 'Register';
     }
 
 

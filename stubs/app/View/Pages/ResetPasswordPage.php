@@ -32,7 +32,7 @@ class ResetPasswordPage extends Page
 
     public function getTitle(): string
     {
-        return $this->title ?: 'ForgotPage';
+        return $this->title ?: 'Reset password';
     }
 
     /**

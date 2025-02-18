@@ -42,7 +42,7 @@ class ProfilePage extends Page
 
     public function getTitle(): string
     {
-        return $this->title ?: 'LoginPage';
+        return $this->title ?: 'Profile';
     }
 
     /**
