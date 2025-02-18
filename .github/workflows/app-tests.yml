@@ -1,0 +1,56 @@
+name: App tests
+
+on:
+  push:
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+      - reopened
+      - synchronize
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  stub-tests:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [ 8.2 ]
+        laravel: [ 11 ]
+    
+    name: Test Stubs - Laravel ${{ matrix.laravel }} - PHP ${{ matrix.php }}
+            
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip
+          ini-values: error_reporting=E_ALL
+          tools: composer:v2
+          coverage: none
+
+      - name: Setup Laravel
+        run: |
+          composer create-project laravel/laravel:^${{ matrix.laravel }} .
+          composer require moonshine/spring:@dev --no-interaction --no-update
+          composer config repositories.spring '{"type": "path", "url": "spring"}' --file composer.json
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: 'spring'
+
+      - name: Install Spring
+        run: |
+          composer update "moonshine/spring" --prefer-dist --no-interaction --no-progress -W
+          php artisan spring:install
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
