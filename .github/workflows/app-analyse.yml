@@ -19,7 +19,7 @@ jobs:
       fail-fast: true
       matrix:
         php: [ 8.2, 8.3, 8.4 ]
-        laravel: [ 11 ]
+        laravel: [ 10, 11 ]
     
     name: Analyse Stubs - Laravel ${{ matrix.laravel }} - PHP ${{ matrix.php }}
             
@@ -36,7 +36,7 @@ jobs:
       - name: Setup Laravel
         run: |
           composer create-project laravel/laravel:^${{ matrix.laravel }} .
-          composer require larastan/larastan:^3.0
+          composer require larastan/larastan
           composer require moonshine/spring:@dev --no-interaction --no-update
           composer config repositories.spring '{"type": "path", "url": "spring"}' --file composer.json
 
