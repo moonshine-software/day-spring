@@ -21,7 +21,7 @@ jobs:
         php: [ 8.2, 8.3, 8.4 ]
         laravel: [ 11 ]
     
-    name: Test Stubs - Laravel ${{ matrix.laravel }} - PHP ${{ matrix.php }}
+    name: Analyse Stubs - Laravel ${{ matrix.laravel }} - PHP ${{ matrix.php }}
             
     steps:
       - name: Setup PHP
