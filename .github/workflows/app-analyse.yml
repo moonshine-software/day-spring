@@ -1,4 +1,4 @@
-name: App tests
+name: App analyse
 
 on:
   push:
@@ -36,6 +36,7 @@ jobs:
       - name: Setup Laravel
         run: |
           composer create-project laravel/laravel:^${{ matrix.laravel }} .
+          composer require larastan/larastan:^3.0
           composer require moonshine/spring:@dev --no-interaction --no-update
           composer config repositories.spring '{"type": "path", "url": "spring"}' --file composer.json
 
@@ -49,8 +50,22 @@ jobs:
           composer update "moonshine/spring" --prefer-dist --no-interaction --no-progress -W
           php artisan moonshine-spring:install
 
-      - name: Execute tests
-        run: vendor/bin/phpunit
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: ":memory:"
+      - name: Add phpstan config
+        run: |
+          cat > phpstan.neon << 'EOF'
+          includes:
+              - vendor/larastan/larastan/extension.neon
+          
+          parameters:
+              editorUrl: 'anything'
+              level: max
+              paths:
+                  - app
+                  - tests
+              excludePaths:
+                  - app/Models/*
+                  - app/Http/Middleware/*
+          EOF
+
+      - name: Execute analyse
+        run: php -d memory_limit=-1 vendor/bin/phpstan analyse
