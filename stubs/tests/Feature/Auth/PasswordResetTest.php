@@ -25,7 +25,9 @@ class PasswordResetTest extends AuthTestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'email' => fake()->freeEmail(),
+        ]);
 
         $this->post(route('forgot.reset'), ['email' => $user->email]);
 
@@ -37,7 +39,9 @@ class PasswordResetTest extends AuthTestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'email' => fake()->freeEmail(),
+        ]);
 
         $this->post(route('forgot.reset'), ['email' => $user->email]);
 
@@ -55,7 +59,9 @@ class PasswordResetTest extends AuthTestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'email' => fake()->freeEmail(),
+        ]);
 
         $this->post(route('forgot.reset'), ['email' => $user->email]);
 

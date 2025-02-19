@@ -17,8 +17,6 @@ abstract class AuthTestCase extends TestCase
 
         Artisan::call('optimize:clear');
 
-        Notification::fake();
-
         Http::preventStrayRequests();
 
         $this->withoutVite();
