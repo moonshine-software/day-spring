@@ -65,6 +65,8 @@ jobs:
               excludePaths:
                   - app/Models/*
                   - app/Http/Middleware/*
+                  - tests/Feature/ExampleTest.php
+                  - tests/Unit/ExampleTest.php
           EOF
 
       - name: Execute analyse
