@@ -7,9 +7,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthenticateFormRequest;
 use App\View\Pages\LoginPage;
+use Illuminate\Container\Attributes\Auth;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthenticateController extends Controller
 {
@@ -32,9 +33,11 @@ class AuthenticateController extends Controller
     }
 
     public function logout(
+        #[Auth]
+        Guard $guard,
         Request $request
     ): RedirectResponse {
-        Auth::guard('web')->logout();
+        $guard->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
