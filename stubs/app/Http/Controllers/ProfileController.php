@@ -8,7 +8,6 @@ use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Http\Requests\ProfileFormRequest;
 use App\Models\User;
 use App\View\Pages\ProfilePage;
-use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -24,24 +23,22 @@ class ProfileController extends Controller
         ProfileFormRequest $request,
     ): RedirectResponse {
         $data = $request->validated();
+        /** @var User $user */
         $user = $request->user();
-        if(! is_null($user)) {
-            $user->update($data);
-        }
+        $user->update($data);
         return to_route('profile');
     }
 
     public function updatePassword(
         UpdatePasswordRequest $request,
-        #[CurrentUser] User $user
     ): RedirectResponse {
         /** @var array{password: string} $data */
         $data = $request->validated();
-
+        /** @var User $user */
+        $user = $request->user();
         $user->update([
             'password' => Hash::make($data['password']),
         ]);
-
         return to_route('profile');
     }
 }
