@@ -22,14 +22,10 @@ class ProfileUpdateTest extends AuthTestCase
             ->post(route('profile.update'), [
                 'name' => $user->name,
                 'email' => fake()->freeEmail(),
-                'password' => 'new-password',
-                'password_confirmation' => 'new-password',
             ]);
 
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect('/profile');
-
-        $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
     }
 }

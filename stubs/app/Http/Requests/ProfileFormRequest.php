@@ -23,8 +23,7 @@ class ProfileFormRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'email' => ['required', 'email:dns', Rule::unique('users')->ignore(auth()->id())],
-            'password' => ['confirmed', Password::default()],
+            'email' => ['required', 'email:dns', Rule::unique('users')->ignore(auth()->id())]
         ];
     }
 }

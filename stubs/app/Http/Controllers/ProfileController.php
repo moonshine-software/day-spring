@@ -22,20 +22,12 @@ class ProfileController extends Controller
 
     public function update(
         ProfileFormRequest $request,
-        #[CurrentUser] User $user
     ): RedirectResponse {
-        $data = $request->only(['email', 'name']);
-
-        if($request->filled('password')) {
-            /** @var string $password */
-            $password = $request->input('password');
-            $data['password'] = Hash::make($password);
+        $data = $request->validated();
+        $user = $request->user();
+        if(! is_null($user)) {
+            $user->update($data);
         }
-
-        /** @var array<string, mixed> $updateData */
-        $updateData = $data;
-        $user->update($updateData);
-
         return to_route('profile');
     }
 
