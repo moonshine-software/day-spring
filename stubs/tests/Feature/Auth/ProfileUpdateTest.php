@@ -3,14 +3,10 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\Test;
 
 class ProfileUpdateTest extends AuthTestCase
 {
-    use RefreshDatabase;
-
     #[Test]
     public function profileUpdate(): void
     {

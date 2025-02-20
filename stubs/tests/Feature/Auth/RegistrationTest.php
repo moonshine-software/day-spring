@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 
 class RegistrationTest extends AuthTestCase
 {
-    use RefreshDatabase;
-
     #[Test]
     public function registerScreen(): void
     {

@@ -3,13 +3,10 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 
 class AuthenticationTest extends AuthTestCase
 {
-    use RefreshDatabase;
-
     #[Test]
     public function loginScreen(): void
     {
