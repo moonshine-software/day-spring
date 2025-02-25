@@ -4,7 +4,7 @@
 
 1. Install the package via Composer:
     ```shell
-    composer require moonshine/spring --dev
+    composer require moonshine/spring
     ```
 2. Run the command:
     ```shell
