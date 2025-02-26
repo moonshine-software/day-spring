@@ -3,13 +3,12 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
-class AuthenticateFormRequest extends FormRequest
+class SessionsLogoutRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->guest();
+        return auth()->check();
     }
 
     /**
@@ -18,8 +17,7 @@ class AuthenticateFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required'],
-            'password' => ['required'],
+            'current_password' => ['required', 'current_password'],
         ];
     }
 }

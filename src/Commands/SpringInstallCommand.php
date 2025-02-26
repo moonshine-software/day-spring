@@ -34,6 +34,7 @@ class SpringInstallCommand extends Command
     {
         if (! config('moonshine-spring.features.sessions')) {
             $filesystem->delete(app_path('Http/Controllers/Auth/SessionController.php'));
+            $filesystem->delete(app_path('Http/Requests/Auth/SessionsLogoutRequest.php'));
             $filesystem->delete(app_path('View/Pages/SessionPage.php'));
         }
     }

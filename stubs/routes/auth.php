@@ -32,5 +32,6 @@ if(config('moonshine-spring.features.sessions')) {
         ->prefix('sessions')
         ->group(function () {
             Route::get('/', 'sessions')->name('sessions');
+            Route::post('/logout-other', 'logoutOther')->name('sessions.logout-other');
         });
 }

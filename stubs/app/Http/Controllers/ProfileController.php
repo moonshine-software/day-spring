@@ -33,13 +33,9 @@ class ProfileController extends Controller
         UpdatePasswordRequest $request,
         #[CurrentUser] User $user
     ): RedirectResponse {
-        /** @var array{password: string} $data */
-        $data = $request->validated();
-
-        $user->update([
-            'password' => Hash::make($data['password']),
-        ]);
-
+        /** @var array<string, mixed> $data */
+        $data = $request->only(['password']);
+        $user->update($data);
         return to_route('profile');
     }
 }

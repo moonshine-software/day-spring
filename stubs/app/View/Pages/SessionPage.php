@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace App\View\Pages;
 
 use MoonShine\Contracts\UI\ComponentContract;
+use MoonShine\Contracts\UI\FormBuilderContract;
+use MoonShine\UI\Components\ActionButton;
+use MoonShine\UI\Components\Layout\LineBreak;
+use MoonShine\UI\Fields\Password;
 use stdClass;
 use Jenssegers\Agent\Agent;
 use MoonShine\UI\Fields\Preview;
@@ -48,7 +52,10 @@ class SessionPage extends Page
             return [];
         }
 
-        $this->clearUserSessions();
+        $this->clearOldUserSessions();
+
+        /** @var string $connection */
+        $connection = config('session.connection');
 
         /** @var Collection<array-key, object{
          *     user_agent: string,
@@ -60,7 +67,7 @@ class SessionPage extends Page
          *     browser: string
          * }&stdClass> $sessions
          */
-        $sessions = DB::table('sessions')
+        $sessions = DB::connection($connection)->table('sessions')
             ->select(['ip_address', 'user_agent', 'last_activity'])
             ->where('user_id', Auth::id())
             ->orderBy('last_activity', 'desc')
@@ -69,7 +76,7 @@ class SessionPage extends Page
         /** @var Agent $agent */
         $agent = $this->agent;
 
-        $sessions = $sessions->map(static function ($session) use ($agent) {
+        $sessions = $sessions->map(static function ($session) use ($agent): stdClass {
             $agent->setUserAgent($session->user_agent);
             $session->os = $agent->platform() ? $agent->platform() : '';
             $session->browser = $agent->browser() ? $agent->browser() : '';
@@ -81,7 +88,7 @@ class SessionPage extends Page
         $cards = CardsBuilder::make()
             ->items($sessions)
             ->columnSpan(2, 2)
-            ->customComponent(function (mixed $item, int $index, CardsBuilder $builder): ComponentContract {
+            ->customComponent(static function (mixed $item, int $index, CardsBuilder $builder): ComponentContract {
                 /** @var object{
                  *     user_agent: string,
                  *     ip_address: string,
@@ -95,17 +102,18 @@ class SessionPage extends Page
                     ? Preview::make()->setValue($item->ip_address . ' ' . Badge::make(__('This device'), 'green'))
                     : Preview::make()->setValue($item->ip_address);
 
-                return Box::make([Grid::make([
-                    Column::make([
-                        Icon::make($item->isDesktop ? 'tv' : 'device-phone-mobile', 10),
-                    ])->columnSpan(2),
-                    Column::make([
-                        Preview::make()->setValue($item->os . ' - ' . $item->browser),
-                        Preview::make()->setValue($item->last_activity_date),
-                        $infoComponent
+                return Box::make([
+                    Grid::make([
+                        Column::make([
+                            Icon::make($item->isDesktop ? 'tv' : 'device-phone-mobile', 10),
+                        ])->columnSpan(2),
+                        Column::make([
+                            Preview::make()->setValue($item->os . ' - ' . $item->browser),
+                            Preview::make()->setValue($item->last_activity_date),
+                            $infoComponent
+                        ])
+                            ->columnSpan(10),
                     ])
-                        ->columnSpan(10),
-                ])
                 ]);
             })
         ;
@@ -113,17 +121,32 @@ class SessionPage extends Page
         return [
             Title::make(__('Sessions')),
             Divider::make(),
-            $cards
+            $cards,
+            LineBreak::make(),
+
+            ActionButton::make(__('LOGOUT OTHER DEVICES'), route('sessions.logout-other'))
+                ->withConfirm(
+                    __('Are you sure you want to clean the rest of the sessions?'),
+                    formBuilder: static fn(FormBuilderContract $formBuilder, mixed $data): FormBuilderContract => $formBuilder //@phpstan-ignore-line
+                        ->fields([
+                            Password::make(__('Password'), 'current_password')
+                        ])
+                        ->precognitive()
+                )
+                ->error()
         ];
     }
 
-    private function clearUserSessions(): void
+    private function clearOldUserSessions(): void
     {
         /** @var int $sessionLifetime */
         $sessionLifetime = config('session.lifetime');
         $sessionLifetime = $sessionLifetime * 60;
 
-        DB::table('sessions')
+        /** @var string $connection */
+        $connection = config('session.connection');
+
+        DB::connection($connection)->table('sessions')
             ->where('user_id', Auth::id())
             ->where('last_activity', '<', time() - $sessionLifetime)
             ->delete();

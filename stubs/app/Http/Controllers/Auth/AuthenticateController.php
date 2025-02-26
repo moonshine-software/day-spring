@@ -23,7 +23,7 @@ class AuthenticateController extends Controller
     {
         if(!auth()->attempt($request->validated())) {
             return back()->withErrors([
-                'email' => __('moonshine::auth.failed')
+                __('Email or password incorrect')
             ]);
         }
 
