@@ -42,9 +42,15 @@ final class ProfileLayout extends AppLayout
      */
     protected function menu(): array
     {
-        return [
+        $menu = [
             MenuItem::make(__('Profile'), route('profile'))->icon('user')
         ];
+
+        if(config('moonshine-spring.features.sessions')) {
+            $menu[] = MenuItem::make(__('Sessions'), route('sessions'));
+        }
+
+        return $menu;
     }
 
     /**

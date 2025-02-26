@@ -25,6 +25,16 @@ class SpringInstallCommand extends Command
 
         $filesystem->copyDirectory(__DIR__ . '/../../stubs/tests/Feature', base_path('tests/Feature'));
 
+        $this->mergeFeatures($filesystem);
+
         $this->components->info('MoonShine Spring installed successfully!');
+    }
+
+    private function mergeFeatures(Filesystem $filesystem): void
+    {
+        if(! config('moonshine-spring.features.sessions')) {
+            $filesystem->delete(app_path('Http/Controllers/Auth/SessionController.php'));
+            $filesystem->delete(app_path('View/Pages/SessionPage.php'));
+        }
     }
 }

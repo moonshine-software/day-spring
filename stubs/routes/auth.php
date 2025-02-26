@@ -25,3 +25,12 @@ Route::controller(RegisterController::class)->middleware('guest')->group(functio
     Route::get('/register', 'form')->name('register');
     Route::post('/register', 'store')->name('register.store');
 });
+
+if(config('moonshine-spring.features.sessions')) {
+    Route::controller(\App\Http\Controllers\Auth\SessionController::class)
+        ->middleware('auth')
+        ->prefix('sessions')
+        ->group(function () {
+            Route::get('/', 'sessions')->name('sessions');
+        });
+}

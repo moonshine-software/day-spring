@@ -35,12 +35,12 @@ final class SpringServiceProvider extends ServiceProvider
         //$this->loadRoutesFrom(__DIR__ . '/../../routes');
 
         $this->publishes([
-            __DIR__ . '/../../config/spring.php' => config_path('spring.php'),
+            __DIR__ . '/../../config/moonshine-spring.php' => config_path('moonshine-spring.php'),
         ]);
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/spring.php',
-            'spring'
+            __DIR__ . '/../../config/moonshine-spring.php',
+            'moonshine-spring'
         );
 
         //        $this->publishes([
