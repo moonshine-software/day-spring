@@ -32,7 +32,7 @@ class SpringInstallCommand extends Command
 
     private function mergeFeatures(Filesystem $filesystem): void
     {
-        if(! config('moonshine-spring.features.sessions')) {
+        if (! config('moonshine-spring.features.sessions')) {
             $filesystem->delete(app_path('Http/Controllers/Auth/SessionController.php'));
             $filesystem->delete(app_path('View/Pages/SessionPage.php'));
         }
