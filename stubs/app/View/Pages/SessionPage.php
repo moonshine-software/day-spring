@@ -71,8 +71,8 @@ class SessionPage extends Page
 
         $sessions = $sessions->map(static function ($session) use ($agent) {
             $agent->setUserAgent($session->user_agent);
-            $session->os = $agent->platform() ?? '';
-            $session->browser = $agent->browser() ?? '';
+            $session->os = $agent->platform() ? $agent->platform() : '';
+            $session->browser = $agent->browser() ? $agent->browser() : '';
             $session->isDesktop = $agent->isDesktop();
             $session->last_activity_date = date('d.m.Y H:i', $session->last_activity);
             return $session;
