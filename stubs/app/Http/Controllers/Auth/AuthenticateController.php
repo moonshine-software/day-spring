@@ -24,7 +24,7 @@ class AuthenticateController extends Controller
         if(!auth()->attempt($request->validated())) {
             return back()->withErrors([
                 'email' => __('moonshine::auth.failed')
-            ]);
+            ])->withInput();
         }
 
         return redirect()->intended(
