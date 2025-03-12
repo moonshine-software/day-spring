@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class AuthenticateFormRequest extends FormRequest
 {
@@ -19,7 +18,7 @@ class AuthenticateFormRequest extends FormRequest
     {
         return [
             'email' => ['required'],
-            'password' => ['required', Password::default()],
+            'password' => ['required'],
         ];
     }
 }
