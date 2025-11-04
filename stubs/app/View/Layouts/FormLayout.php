@@ -41,7 +41,10 @@ final class FormLayout extends AppLayout
                     'lang' => $this->getHeadLang(),
                 ])
                 ->withAlpineJs()
-                ->withThemes(),
+                ->when(
+                    $this->hasThemes() || $this->isAlwaysDark(),
+                    fn (Html $html): Html => $html->withThemes($this->isAlwaysDark())
+                ),
         ]);
     }
 }
